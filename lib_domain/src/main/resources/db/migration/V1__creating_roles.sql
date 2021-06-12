@@ -1,0 +1,2 @@
+INSERT INTO roles (id,name, created_at, updated_at) VALUES('3bc973a8-da27-462c-9bac-fcddf28ae1fe','ROLE_USER', now(), now());
+INSERT INTO roles (id,name, created_at, updated_at) VALUES('d8df23b7-9c89-4bd6-8479-662b666a57b3','ROLE_ADMIN', now(), now());

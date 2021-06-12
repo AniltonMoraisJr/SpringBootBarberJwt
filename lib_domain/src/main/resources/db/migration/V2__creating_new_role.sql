@@ -1,0 +1,1 @@
+INSERT INTO roles (id,name, created_at, updated_at) VALUES('7af4374d-c405-4d3b-9820-0975c95b4404','ROLE_TRIAL', now(), now());
