@@ -1,10 +1,4 @@
 *#
-*.iml
-*.ipr
-*.iws
-*.jar
-*.sw?
-*~
 .#*
 .*.md.html
 .DS_Store
