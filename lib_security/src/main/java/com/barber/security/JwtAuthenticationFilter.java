@@ -20,6 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.barber.service.CustomUserDetailsService;
 
+// Class responsible for execute filter for every request
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 	@Autowired
@@ -30,15 +31,21 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
+    // Execute the filter
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-            String jwt = getJwtFromRequest(request);
+            String jwt = getJwtFromRequest(request); // Get the token from the request
 
+            // Verify if have token
             if (StringUtils.hasText(jwt) && tokenProvider.validateToken(jwt)) {
+            	// Get the userId from the token claimns subject
                 UUID userId = tokenProvider.getUserIdFromJWT(jwt);
 
+                // Query in database to get the UserDatails by user id
                 UserDetails userDetails = customUserDetailsService.loadUserById(userId);
+                
+                // Save in Security Context the user authenticated
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 

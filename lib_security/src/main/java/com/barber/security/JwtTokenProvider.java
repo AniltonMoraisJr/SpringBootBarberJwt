@@ -48,7 +48,7 @@ public class JwtTokenProvider {
     }
     
     
-
+    // Method to get User Id from Token Claims subject
     public UUID getUserIdFromJWT(String token) {
         Claims claims = Jwts.parser()
                 .setSigningKey(jwtSecret)
@@ -58,6 +58,7 @@ public class JwtTokenProvider {
         return UUID.fromString(claims.getSubject());
     }
 
+    // Validate token with the jwt secret saved on application.properties
     public boolean validateToken(String authToken) {
         try {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(authToken);

@@ -20,6 +20,7 @@ public class CustomUserDetailsServiceImpl implements CustomUserDetailsService {
 	@Autowired
 	private UserRepository userRepository;
 
+	// This method query user by username or email. It's override because came from UserDetailsService interface
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {

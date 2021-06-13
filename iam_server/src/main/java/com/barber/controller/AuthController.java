@@ -2,11 +2,18 @@ package com.barber.controller;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.barber.dto.AuthenticationRequestDTO;
+import com.barber.dto.RegisterUserRequestDTO;
+import com.barber.service.AuthenticateUserService;
+import com.barber.service.RegisterUserService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -15,53 +22,26 @@ import io.swagger.annotations.ApiOperation;
 @Api(value = "Authentication and Register")
 @RequestMapping("/api/auth")
 public class AuthController {
+	
+	@Autowired
+	private AuthenticateUserService authenticateUserService;
+	
+	@Autowired
+	private RegisterUserService registerUserService;
+	
 	@ApiOperation(value = "Sign In")
 	@PostMapping("/signin")
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody String loginRequest) {
-
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(
-//                        loginRequest.getUsernameOrEmail(),
-//                        loginRequest.getPassword()
-//                )
-//        );
-//
-//        SecurityContextHolder.getContext().setAuthentication(authentication);
-//
-//        String jwt = tokenProvider.generateToken(authentication);
-        return ResponseEntity.ok(true);
+    public ResponseEntity<?> authenticateUser(@Valid @RequestBody AuthenticationRequestDTO request) {
+        return ResponseEntity.ok(this.authenticateUserService.authenticate(request));
     }
 	
-
-//    @PostMapping("/signup")
-//    public ResponseEntity<?> registerUser(@Valid @RequestBody SignUpRequest signUpRequest) {
-//        if(userRepository.existsByUsername(signUpRequest.getUsername())) {
-//            return new ResponseEntity(new ApiResponse(false, "Username is already taken!"),
-//                    HttpStatus.BAD_REQUEST);
-//        }
-//
-//        if(userRepository.existsByEmail(signUpRequest.getEmail())) {
-//            return new ResponseEntity(new ApiResponse(false, "Email Address already in use!"),
-//                    HttpStatus.BAD_REQUEST);
-//        }
-//
-//        // Creating user's account
-//        User user = new User(signUpRequest.getName(), signUpRequest.getUsername(),
-//                signUpRequest.getEmail(), signUpRequest.getPassword());
-//
-//        user.setPassword(passwordEncoder.encode(user.getPassword()));
-//
-//        Role userRole = roleRepository.findByName(RoleName.ROLE_USER)
-//                .orElseThrow(() -> new AppException("User Role not set."));
-//
-//        user.setRoles(Collections.singleton(userRole));
-//
-//        User result = userRepository.save(user);
-//
-//        URI location = ServletUriComponentsBuilder
-//                .fromCurrentContextPath().path("/api/users/{username}")
-//                .buildAndExpand(result.getUsername()).toUri();
-//
-//        return ResponseEntity.created(location).body(new ApiResponse(true, "User registered successfully"));
-//    }
+	@ApiOperation(value = "Sign Up")
+    @PostMapping("/signup")
+    public ResponseEntity<String> registerUser(@Valid @RequestBody RegisterUserRequestDTO request) {
+        boolean result = this.registerUserService.register(request);
+        if(result == false) {
+        	return new ResponseEntity<String>("Error on save user", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return ResponseEntity.ok("User created");
+    }
 }

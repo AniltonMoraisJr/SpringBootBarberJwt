@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="iam_server/.mvn/wrapper"/>
+	<classpathentry kind="src" path="iam_server/src/main/java"/>
+	<classpathentry kind="src" path="iam_server/src/test/java"/>
+	<classpathentry kind="src" path="lib_domain/.mvn/wrapper"/>
+	<classpathentry kind="src" path="lib_domain/src/main/java"/>
+	<classpathentry kind="src" path="lib_security/.mvn/wrapper"/>
+	<classpathentry kind="src" path="lib_security/src/main/java"/>
+	<classpathentry kind="lib" path="lib_domain/target/lib_domain-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="lib_security/target/lib_security-0.0.1-SNAPSHOT.jar"/>
+	<classpathentry kind="output" path="iam_server/target/classes"/>
+</classpath>

@@ -50,11 +50,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter{
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+    
+    // Method responsible to encrypt and decrypt the password 
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+    
+    // Method responsible to configure access of the request
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {

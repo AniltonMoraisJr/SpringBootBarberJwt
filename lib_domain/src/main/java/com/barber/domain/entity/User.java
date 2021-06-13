@@ -14,8 +14,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
-import org.hibernate.annotations.NaturalId;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -39,7 +37,6 @@ public class User extends AuditModel implements Serializable {
     @Size(max = 15)
     private String username;
 
-    @NaturalId
     @NotBlank
     @Size(max = 40)
     @Email
